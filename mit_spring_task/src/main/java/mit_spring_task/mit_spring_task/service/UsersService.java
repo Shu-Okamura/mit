@@ -15,12 +15,11 @@ public class UsersService {
     @Autowired
     private UsersResponseFactory urpf;
 
-    // テスト用、全権表示
-    public List<UsersResponse> findAll(){
-        return urpf.urpfList(um.findAll());
-    }
-
-    // nameを受け取って検索
+    /**
+     * SQLのfindNameを呼び出し、UserResponseFactoryのリスト化処理を呼び出す
+     * @param name Controllerから受け取ったユーザー名
+     * @return ユーザー検索結果のリスト
+     */
     public  List<UsersResponse> findName(String name){
         return  urpf.urpfList(um.findName(name));
     }

@@ -8,12 +8,20 @@ import java.util.stream.Collectors;
 
 @Component
 public class UsersResponseFactory {
-    // urpインスタンスをリストとして入れる
-    public List<UsersResponse> urpfList(List<UsersEntity> u){
-        return u.stream().map(this::urp).collect(Collectors.toList());
+    /**
+     * ユーザー検索結果をリスト化
+     * @param uList UsersEntityデータのリスト
+     * @return 全ユーザー検索結果のリスト
+     */
+    public List<UsersResponse> urpfList(List<UsersEntity> uList){
+        return uList.stream().map(this::urp).collect(Collectors.toList());
     }
 
-    // UserResponseインスタンス作成
+    /**
+     * 検索ワードに合致するユーザーデータのインスタンスを生成
+     * @param u UsersEntityデータ
+     * @return 個々のユーザー検索結果
+     */
     public UsersResponse urp(UsersEntity u){
         UsersChildResponse ucrp = new UsersChildResponse(u.getZipcode(),u.getAddress());
         return new UsersResponse(u.getName(),u.getAge(),u.getTel(),ucrp);
