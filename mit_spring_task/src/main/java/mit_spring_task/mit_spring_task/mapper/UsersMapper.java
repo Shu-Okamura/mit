@@ -8,5 +8,6 @@ import java.util.List;
 @Mapper
 public interface UsersMapper {
     List<UsersEntity> findName(String name);
-    void save(UsersEntity u);
+    void saveAddress(UsersEntity u);
+    void saveUsers(UsersEntity u);
 }

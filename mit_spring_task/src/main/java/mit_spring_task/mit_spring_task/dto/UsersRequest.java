@@ -1,9 +1,6 @@
 package mit_spring_task.mit_spring_task.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -23,5 +20,5 @@ public class UsersRequest {
     private Integer age;
     @Valid @NotNull
     private Integer tel;
-    private UsersChildRequest addressinfo;
+    private UsersChildRequest addressInfo;
 }

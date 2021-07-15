@@ -1,7 +1,6 @@
 package mit_spring_task.mit_spring_task.controller;
 
-import mit_spring_task.mit_spring_task.dto.UsersRequest;
-import mit_spring_task.mit_spring_task.dto.UsersResponse;
+import mit_spring_task.mit_spring_task.dto.UsersRequestWrapper;
 import mit_spring_task.mit_spring_task.dto.UsersResponseWrapper;
 import mit_spring_task.mit_spring_task.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +22,17 @@ public class UsersController {
      * @return ユーザー情報検索結果
      */
     @GetMapping("/users")
-    public UsersResponseWrapper users(@Valid @NotBlank @RequestParam("name") String name){
+    UsersResponseWrapper users(@Valid @NotBlank @RequestParam("name") String name){
         return us.findName(name);
     }
 
+    /**
+     * ユーザー情報を登録
+     * @param urqw ユーザー情報
+     */
     @PostMapping("/users")
-    public void users(@RequestBody UsersRequest user){
-        us.save(user);
+    void users(@RequestBody UsersRequestWrapper urqw){
+        us.save(urqw);
     }
 
 }
