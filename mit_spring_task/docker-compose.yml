@@ -5,9 +5,9 @@ services:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_DATABASE: my_testdb
-      MYSQL_USER: docker
-      MYSQL_PASSWORD: docker
+      MYSQL_DATABASE: mit
+      MYSQL_USER: mit
+      MYSQL_PASSWORD: mit
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3306:3306"

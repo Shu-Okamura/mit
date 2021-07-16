@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mit_spring_task.mit_spring_task.mapper.UsersMapper">
+    <select id="findName" resultType="mit_spring_task.mit_spring_task.entity.UsersEntity">
+        select users.id, users.name, users.age, users.tel, users.addressid, users.createdate, users.updatedate, address.zipcode, address.address from users inner join address on users.id = address.addressid WHERE name = #{name};
+    </select>
+    <insert id="saveAddress">
+        insert into address (addressid, zipcode, address, createdate, updatedate) values (#{addressid}, #{zipcode}, #{address}, #{createdate}, #{updatedate})
+    </insert>
+    <insert id="saveUsers">
+        insert into users (id, name, age, tel, addressid, createdate, updatedate) values (#{id}, #{name}, #{age}, #{tel}, #{addressid}, #{createdate}, #{updatedate})
+    </insert>
+
+</mapper>
