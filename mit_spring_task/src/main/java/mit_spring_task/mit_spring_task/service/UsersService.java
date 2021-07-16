@@ -1,6 +1,13 @@
 package mit_spring_task.mit_spring_task.service;
 
-import mit_spring_task.mit_spring_task.dto.*;
+import mit_spring_task.mit_spring_task.dto.UsersAddressResponse.UsersAddressResponse;
+import mit_spring_task.mit_spring_task.dto.UsersAddressResponse.UsersAddressResponseFactory;
+import mit_spring_task.mit_spring_task.dto.UsersRequest.UsersRequestFactory;
+import mit_spring_task.mit_spring_task.dto.UsersRequest.UsersRequestWrapper;
+import mit_spring_task.mit_spring_task.dto.UsersResponse.UsersResponse;
+import mit_spring_task.mit_spring_task.dto.UsersResponse.UsersResponseFactory;
+import mit_spring_task.mit_spring_task.dto.UsersResponse.UsersResponseWrapper;
+import mit_spring_task.mit_spring_task.dto.UsersResponse.UsersResponseWrapperFactory;
 import mit_spring_task.mit_spring_task.entity.UsersEntity;
 import mit_spring_task.mit_spring_task.entity.UsersEntityFactory;
 import mit_spring_task.mit_spring_task.mapper.UsersMapper;
@@ -22,6 +29,8 @@ public class UsersService {
     private UsersRequestFactory urqf;
     @Autowired
     private UsersEntityFactory uf;
+    @Autowired
+    private UsersAddressResponseFactory uarpf;
 
     /**
      * SQLのfindNameを呼び出し、UserResponseFactoryのリスト化処理を呼び出す
@@ -38,9 +47,23 @@ public class UsersService {
      * @param urqw　Postされたデータ
      */
     @Transactional
-    public void save(UsersRequestWrapper urqw){
+    public void saveAddress(UsersRequestWrapper urqw){
         UsersEntity u = uf.toUser(urqf.toUrq(urqw));
         um.saveAddress(u);
+    }
+    @Transactional
+    public void saveUsers(UsersRequestWrapper urqw){
+        UsersEntity u = uf.toUser(urqf.toUrq(urqw));
         um.saveUsers(u);
+    }
+    public UsersAddressResponse findId(Integer id){
+        UsersEntity u = um.findId(id);
+        return uarpf.toUarp(u);
+    }
+    @Transactional
+    public void updateAddress(Integer id, Integer zipcode, String address){
+        UsersEntity u = um.findAddress(id);
+        Integer addressid = u.getAddressid();
+        um.updateAddress(addressid, zipcode, address);
     }
 }

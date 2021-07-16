@@ -1,6 +1,6 @@
 package mit_spring_task.mit_spring_task.entity;
 
-import mit_spring_task.mit_spring_task.dto.UsersRequest;
+import mit_spring_task.mit_spring_task.dto.UsersRequest.UsersRequest;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;

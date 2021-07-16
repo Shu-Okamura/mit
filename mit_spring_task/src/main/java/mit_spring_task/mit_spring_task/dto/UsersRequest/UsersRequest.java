@@ -1,4 +1,4 @@
-package mit_spring_task.mit_spring_task.dto;
+package mit_spring_task.mit_spring_task.dto.UsersRequest;
 
 import lombok.*;
 import org.springframework.validation.annotation.Validated;

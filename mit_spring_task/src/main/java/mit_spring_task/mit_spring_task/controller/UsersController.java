@@ -1,7 +1,8 @@
 package mit_spring_task.mit_spring_task.controller;
 
-import mit_spring_task.mit_spring_task.dto.UsersRequestWrapper;
-import mit_spring_task.mit_spring_task.dto.UsersResponseWrapper;
+import mit_spring_task.mit_spring_task.dto.UsersAddressResponse.UsersAddressResponse;
+import mit_spring_task.mit_spring_task.dto.UsersRequest.UsersRequestWrapper;
+import mit_spring_task.mit_spring_task.dto.UsersResponse.UsersResponseWrapper;
 import mit_spring_task.mit_spring_task.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @Validated
@@ -32,7 +34,20 @@ public class UsersController {
      */
     @PostMapping("/users")
     void users(@RequestBody UsersRequestWrapper urqw){
-        us.save(urqw);
+        us.saveAddress(urqw);
+        us.saveUsers(urqw);
+    }
+
+    @GetMapping("/address")
+    UsersAddressResponse address(@Valid @NotNull @RequestParam("id") Integer id){
+        return us.findId(id);
+    }
+
+    @PostMapping("/address/{id}")
+    void address(@Valid @NotNull @PathVariable("id") Integer id,
+                 @Valid @NotNull @RequestParam("zipcode")Integer zipcode,
+                 @Valid @NotBlank @RequestParam("address")String address){
+        us.updateAddress(id,zipcode,address);
     }
 
 }
