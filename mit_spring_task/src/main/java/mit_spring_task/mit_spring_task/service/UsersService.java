@@ -51,15 +51,33 @@ public class UsersService {
         UsersEntity u = uf.toUser(urqf.toUrq(urqw));
         um.saveAddress(u);
     }
+
+    /**
+     * 受け取ったデータをUserEntity型に変換し、それぞれSQLメソッドで登録処理をする
+     * @param urqw Postされたデータ
+     */
     @Transactional
     public void saveUsers(UsersRequestWrapper urqw){
         UsersEntity u = uf.toUser(urqf.toUrq(urqw));
         um.saveUsers(u);
     }
+
+    /**
+     * PostされたIDをもとに、ユーザーの住所情報を返す
+     * @param id ユーザーID
+     * @return UserEntityインスタンス
+     */
     public UsersAddressResponse findId(Integer id){
         UsersEntity u = um.findId(id);
         return uarpf.toUarp(u);
     }
+
+    /**
+     * ユーザーIDを元に検索し、、そのユーザーの郵便番号と住所を更新する
+     * @param id ユーザーID
+     * @param zipcode 郵便番号
+     * @param address 住所
+     */
     @Transactional
     public void updateAddress(Integer id, Integer zipcode, String address){
         UsersEntity u = um.findAddress(id);
