@@ -25,8 +25,6 @@ INSERT INTO `mit`.`address` VALUES (1, 1000001 , "東京都新宿区西新宿１
 INSERT INTO `mit`.`address` VALUES (2, 2000002 , "山梨県甲府市相生２−２−２", now(), now());
 INSERT INTO `mit`.`address` VALUES (3, 3000003 , "沖縄県那覇市３−３−３", now(), now());
 
--- telの桁数かサイズが引っかかっていて挿入できない
--- INSERT INTO `mit`.`users` VALUES (1, "太郎", 16, 09000010002, 1, now(), now());
 INSERT INTO `mit`.`users` VALUES (1, "太郎", 16, 0900010002, 1, now(), now());
 INSERT INTO `mit`.`users` VALUES (2, "次郎", 20, 0550030004, 1, now(), now());
 INSERT INTO `mit`.`users` VALUES (3, "花子", 45, 0330060007, 2, now(), now());
