@@ -1,6 +1,7 @@
 package mit_spring_task.mit_spring_task.service;
 import mit_spring_task.mit_spring_task.dto.UsersAddressResponse.UsersAddressResponse;
 import mit_spring_task.mit_spring_task.dto.UsersAddressResponse.UsersAddressResponseFactory;
+import mit_spring_task.mit_spring_task.dto.UsersRequest.UsersRequest;
 import mit_spring_task.mit_spring_task.dto.UsersRequest.UsersRequestWrapper;
 import mit_spring_task.mit_spring_task.dto.UsersResponse.*;
 import mit_spring_task.mit_spring_task.entity.UsersEntity;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.*;
 public class UsersServiceTest {
     @InjectMocks
     private UsersService us;
-    @MockBean
+    @MockBean(name = "um")
     private UsersMapper um;
     @MockBean
     private UsersResponseFactory urpf;
@@ -62,6 +63,7 @@ public class UsersServiceTest {
     public void saveAddress_正常系(){
         UsersRequestWrapper urqw = new UsersRequestWrapper();
         UsersEntity u = new UsersEntity();
+        when(uf.toUser(urqw)).thenReturn(u);
         us.saveAddress(urqw);
         verify(uf,times(1)).toUser(urqw);
         verify(um,times(1)).saveAddress(u);
@@ -71,6 +73,7 @@ public class UsersServiceTest {
     public void saveUsers_正常系(){
         UsersRequestWrapper urqw = new UsersRequestWrapper();
         UsersEntity u = new UsersEntity();
+        when(uf.toUser(urqw)).thenReturn(u);
         us.saveUsers(urqw);
         verify(uf,times(1)).toUser(urqw);
         verify(um,times(1)).saveUsers(u);
@@ -93,8 +96,14 @@ public class UsersServiceTest {
     }
     @Test
     public void updateAddress_正常系(){
-        Integer id = 1; Integer zipcode = 2; String address = "address";
-        us.updateAddress(id,zipcode,address);
-        verify(um,times(1)).updateAddress(id,zipcode,address);
+        Integer id = 1; Integer zipcode = 5; String address = "new address";
+        UsersEntity u = new UsersEntity(id,"name",2,3,4,null,null,5,"old address");
+        when(um.findAddress(id)).thenReturn(u);
+        doNothing().when(um).updateAddress(u.getAddressid(),zipcode,address);
+
+        us.updateAddress(id, zipcode, address);
+
+        verify(um,times(1)).findAddress(id);
+        verify(um,times(1)).updateAddress(u.getAddressid(), zipcode, address);
     }
 }

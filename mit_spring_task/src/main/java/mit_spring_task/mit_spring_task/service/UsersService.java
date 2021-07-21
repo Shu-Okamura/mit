@@ -77,7 +77,6 @@ public class UsersService {
     @Transactional
     public void updateAddress(Integer id, Integer zipcode, String address){
         UsersEntity u = um.findAddress(id);
-        Integer addressid = u.getAddressid();
-        um.updateAddress(addressid, zipcode, address);
+        um.updateAddress(u.getAddressid(), zipcode, address);
     }
 }
