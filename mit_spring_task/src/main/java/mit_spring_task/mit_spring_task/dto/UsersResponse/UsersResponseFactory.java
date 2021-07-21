@@ -1,4 +1,4 @@
-package mit_spring_task.mit_spring_task.dto;
+package mit_spring_task.mit_spring_task.dto.UsersResponse;
 
 import mit_spring_task.mit_spring_task.entity.UsersEntity;
 import org.springframework.stereotype.Component;

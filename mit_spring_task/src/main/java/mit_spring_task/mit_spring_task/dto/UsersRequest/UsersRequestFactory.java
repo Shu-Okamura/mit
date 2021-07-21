@@ -1,6 +1,5 @@
-package mit_spring_task.mit_spring_task.dto;
+package mit_spring_task.mit_spring_task.dto.UsersRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -11,5 +11,16 @@
     <insert id="saveUsers">
         insert into users (id, name, age, tel, addressid, createdate, updatedate) values (#{id}, #{name}, #{age}, #{tel}, #{addressid}, #{createdate}, #{updatedate})
     </insert>
-
+    <select id="findId" resultType="mit_spring_task.mit_spring_task.entity.UsersEntity">
+        select address.zipcode, address.address from users inner join address on users.addressid = address.addressid WHERE id = #{id}
+    </select>
+    <select id="findAddress" resultType="mit_spring_task.mit_spring_task.entity.UsersEntity">
+        select address.addressid from users inner join address on users.addressid = address.addressid WHERE id = #{id};
+    </select>
+    <update id="updateAddress">
+        update address set zipcode = #{zipcode}, address = #{address} where addressid = #{addressid}
+    </update>
+<!--    <update id="updateAddress">-->
+<!--        update users set address.zipcode = #{zipcode}, address.address = #{address} from users inner join address on users.id = address.addressid WHERE id = #{id}-->
+<!--    </update>-->
 </mapper>
