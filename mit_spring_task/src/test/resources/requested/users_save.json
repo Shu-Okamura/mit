@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "name": "FT_name",
+      "age": 20,
+      "tel": 1000010002,
+      "addressInfo": {
+        "addressid": 1,
+        "zipcode": 4000004,
+        "address": "FT_address",
+      }
+    }
+  ]
+}
