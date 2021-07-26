@@ -2,11 +2,11 @@
   "users": [
     {
       "name": "太郎",
-      "age": 16,
-      "tel": 9000010002,
+      "age": 22,
+      "tel": 33,
       "addressInfo": {
-        "zipcode": 1000001,
-        "addressid": 1
+        "zipcode": 55555,
+        "address": "ハワイ"
       }
     }
   ]

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.web.servlet.MockMvc;
@@ -49,44 +50,49 @@ public class UsersTest {
         classLoader = this.getClass().getClassLoader();
     }
 
-    @DatabaseSetup("/data/find")
+    @DatabaseSetup("/data/users/init-data/find")
     @Test
     public void users_find_正常系() throws Exception{
         String expected = convertJsonDataToString("expected/users_find.json");
-        mockMvc.perform(get("/users?name=太郎"))
+        String data = "?name=太郎";
+        mockMvc.perform(get("/users" +data))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected));
     }
 
-    // dataseterror
-    @DatabaseSetup("/data/users/save")
+    @DatabaseSetup("/data/users/init-data/save") 
     @ExpectedDatabase(
-            value = "",
-            assertionMode = DatabaseAssertionMode.DEFAULT
+            value = "/data/users/after-data/save",
+            assertionMode = DatabaseAssertionMode.NON_STRICT
     )
     @Test
     public void users_save_正常系() throws Exception{
         String request = convertJsonDataToString("requested/users_save.json");
-        mockMvc.perform(post("/users"))
+        mockMvc.perform(post("/users")
+                        .content(request)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
     }
 
-    // 現状：AssertionError actualが400で帰ってくる、おそらくURLパラムを渡せていないから
-    @DatabaseSetup("/data/find")
+    @DatabaseSetup("/data/users/init-data/find")
     @Test
     public void address_find_正常系() throws Exception{
-        String expected = convertJsonDataToString("expected/users_find.json");
-        mockMvc.perform(post("/users"))
+        String expected = convertJsonDataToString("expected/address_find.json");
+        String data = "?id=11";
+        mockMvc.perform(get("/address" + data))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected));
     }
 
-    @DatabaseSetup("/data/users/update")
-    @ExpectedDatabase("")
+    @DatabaseSetup("/data/users/init-data/update")
+    @ExpectedDatabase(
+            value="/data/users/after-data/update",
+            assertionMode = DatabaseAssertionMode.NON_STRICT
+    )
     @Test
     public void address_update_正常系() throws Exception{
-        String request = convertJsonDataToString("expected/users_find.json");
-        mockMvc.perform(post("/users"))
+        String data = "/11?zipcode=11111&address=ハワイ";
+        mockMvc.perform(post("/address" + data))
                 .andExpect(status().isOk());
     }
 
