@@ -2,8 +2,6 @@ package mit_spring_task.mit_spring_task.controller;
 
 import mit_spring_task.mit_spring_task.dto.UsersAddressResponse.UsersAddressResponse;
 import mit_spring_task.mit_spring_task.dto.UsersRequest.UsersRequestWrapper;
-import mit_spring_task.mit_spring_task.dto.UsersResponse.UsersChildResponse;
-import mit_spring_task.mit_spring_task.dto.UsersResponse.UsersResponse;
 import mit_spring_task.mit_spring_task.dto.UsersResponse.UsersResponseWrapper;
 import mit_spring_task.mit_spring_task.service.UsersService;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,8 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -31,12 +27,11 @@ public class UsersControllerTest {
 
     @Test
     public void users_get正常系(){
-        UsersResponse urp = new UsersResponse("test",1,1, new UsersChildResponse(1,""));
-        UsersResponseWrapper urpw = new UsersResponseWrapper(List.of(urp));
-        when(us.findName("test")).thenReturn(urpw);
-        UsersResponseWrapper expect = urpw;
-        UsersResponseWrapper actual = uc.users("test");
-        verify(us, times(1)).findName("test");
+        String name = "test";
+        UsersResponseWrapper expect = new UsersResponseWrapper();
+        when(us.findName(name)).thenReturn(expect);
+        UsersResponseWrapper actual = uc.users(name);
+        verify(us, times(1)).findName(name);
         assertEquals(expect, actual);
     }
 
@@ -50,11 +45,11 @@ public class UsersControllerTest {
 
     @Test
     public void address_get正常系(){
-        UsersAddressResponse uarp = new UsersAddressResponse(new UsersChildResponse(1,""));
-        when(us.findId(1)).thenReturn(uarp);
-        UsersAddressResponse expect = uarp;
-        UsersAddressResponse actual = us.findId(1);
-        verify(us,times(1)).findId(1);
+        Integer id = 1;
+        UsersAddressResponse expect = new UsersAddressResponse();
+        when(us.findId(id)).thenReturn(expect);
+        UsersAddressResponse actual = us.findId(id);
+        verify(us,times(1)).findId(id);
         assertEquals(expect,actual);
     }
 

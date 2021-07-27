@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,25 +40,20 @@ public class UsersServiceTest {
 
     @Test
     public void findName_正常系(){
-        String name = "test_name";
-        UsersEntity u = new UsersEntity(1, name,2,3,4,null,null,5,"address");
-        List<UsersEntity> uList = List.of(u);
-        UsersResponse urp = new UsersResponse(u.getName(),u.getAge(),u.getTel(), new UsersChildResponse(u.getZipcode(),u.getAddress()));
-        List<UsersResponse> urpList = List.of(urp);
-        UsersResponseWrapper urpw = new UsersResponseWrapper(urpList);
-
+        String name = "name";
+        List<UsersEntity> uList = new ArrayList<>();
+        List<UsersResponse> urpList = new ArrayList<>();
+        UsersResponseWrapper expect = new UsersResponseWrapper();
         when(um.findName(name)).thenReturn(uList);
         when(urpf.toUrpList(uList)).thenReturn(urpList);
-        when(urpwf.toUrpw(urpList)).thenReturn(urpw);
-
-        UsersResponseWrapper expect = urpw;
+        when(urpwf.toUrpw(urpList)).thenReturn(expect);
         UsersResponseWrapper actual = us.findName(name);
-
         verify(um, times(1)).findName(name);
         verify(urpf,times(1)).toUrpList(uList);
         verify(urpwf,times(1)).toUrpw(urpList);
         assertEquals(expect, actual);
     }
+
     @Test
     public void saveAddress_正常系(){
         UsersRequestWrapper urqw = new UsersRequestWrapper();
@@ -77,31 +73,27 @@ public class UsersServiceTest {
         verify(uf,times(1)).toUser(urqw);
         verify(um,times(1)).saveUsers(u);
     }
+
     @Test
     public void findId_正常系(){
         Integer id = 1;
-        UsersAddressResponse uarp = new UsersAddressResponse(new UsersChildResponse(5,"address"));
-        UsersEntity u = new UsersEntity(id,"name",2,3,4,null,null,5,"address");
-
+        UsersAddressResponse expect = new UsersAddressResponse();
+        UsersEntity u = new UsersEntity();
         when(um.findId(id)).thenReturn(u);
-        when(uarpf.toUarp(u)).thenReturn(uarp);
-
-        UsersAddressResponse expect = uarp;
+        when(uarpf.toUarp(u)).thenReturn(expect);
         UsersAddressResponse actual = us.findId(id);
-
         verify(uarpf,times(1)).toUarp(u);
         verify(um,times(1)).findId(id);
         assertEquals(expect,actual);
     }
+
     @Test
     public void updateAddress_正常系(){
         Integer id = 1; Integer zipcode = 5; String address = "new address";
-        UsersEntity u = new UsersEntity(id,"name",2,3,4,null,null,5,"old address");
+        UsersEntity u = new UsersEntity();
         when(um.findAddress(id)).thenReturn(u);
         doNothing().when(um).updateAddress(u.getAddressid(),zipcode,address);
-
         us.updateAddress(id, zipcode, address);
-
         verify(um,times(1)).findAddress(id);
         verify(um,times(1)).updateAddress(u.getAddressid(), zipcode, address);
     }

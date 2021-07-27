@@ -21,18 +21,16 @@ public class UsersEntityFactoryTest {
 
     @Test
     public void toUser_正常系(){
-        UsersRequest urq = new UsersRequest(1,"name",2,3,new UsersChildRequest(4,5,"address"));
-        UsersRequestWrapper urqw = new UsersRequestWrapper(urq);
-        UsersEntity expect = new UsersEntity(1,"name",2,3,4,null,null,5,"address");
-
+        Integer id=1; String name="name"; Integer age=2; Integer tel=3; Integer addressid=4; Integer zipcode=5; String address="address";
+        UsersRequestWrapper urqw = new UsersRequestWrapper(new UsersRequest(id,name,age,tel,new UsersChildRequest(addressid,zipcode,address)));
         UsersEntity actual = uf.toUser(urqw);
 
-        assertEquals(expect.getId(), actual.getId());
-        assertEquals(expect.getName(), actual.getName());
-        assertEquals(expect.getAge(), actual.getAge());
-        assertEquals(expect.getTel(), actual.getTel());
-        assertEquals(expect.getAddressid(), actual.getAddressid());
-        assertEquals(expect.getZipcode(), actual.getZipcode());
-        assertEquals(expect.getAddress(), actual.getAddress());
+        assertEquals(id, actual.getId());
+        assertEquals(name, actual.getName());
+        assertEquals(age, actual.getAge());
+        assertEquals(tel, actual.getTel());
+        assertEquals(addressid, actual.getAddressid());
+        assertEquals(zipcode, actual.getZipcode());
+        assertEquals(address, actual.getAddress());
     }
 }

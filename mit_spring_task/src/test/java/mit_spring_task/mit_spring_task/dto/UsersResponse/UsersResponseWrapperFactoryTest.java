@@ -21,13 +21,12 @@ public class UsersResponseWrapperFactoryTest {
 
     @Test
     public void toUrpw_正常系(){
-        UsersResponseWrapper expect = new UsersResponseWrapper(List.of(new UsersResponse("name",1,2,new UsersChildResponse(1,"address"))));
-        UsersResponseWrapper actual = urpwf.toUrpw(List.of(new UsersResponse("name",1,2,new UsersChildResponse(1,"address"))));
-        assertEquals(expect.getUsers().get(0).getName(), actual.getUsers().get(0).getName());
-        assertEquals(expect.getUsers().get(0).getAge(), actual.getUsers().get(0).getAge());
-        assertEquals(expect.getUsers().get(0).getTel(), actual.getUsers().get(0).getTel());
-        assertEquals(expect.getUsers().get(0).getAddressInfo().getZipcode(), actual.getUsers().get(0).getAddressInfo().getZipcode());
-        assertEquals(expect.getUsers().get(0).getAddressInfo().getAddress(), actual.getUsers().get(0).getAddressInfo().getAddress());
-
+        String name = "name"; Integer age = 1; Integer tel = 2; Integer zipcode = 3; String address = "address";
+        UsersResponseWrapper actual = urpwf.toUrpw(List.of(new UsersResponse(name,age,tel,new UsersChildResponse(zipcode,address))));
+        assertEquals(name, actual.getUsers().get(0).getName());
+        assertEquals(age, actual.getUsers().get(0).getAge());
+        assertEquals(tel, actual.getUsers().get(0).getTel());
+        assertEquals(zipcode, actual.getUsers().get(0).getAddressInfo().getZipcode());
+        assertEquals(address, actual.getUsers().get(0).getAddressInfo().getAddress());
     }
 }
