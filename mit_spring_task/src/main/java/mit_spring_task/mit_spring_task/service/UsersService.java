@@ -65,6 +65,9 @@ public class UsersService {
      */
     public UsersAddressResponse findId(Integer id){
         UsersEntity u = um.findId(id);
+        if(u == null){
+            u = new UsersEntity();
+        }
         return uarpf.toUarp(u);
     }
 
@@ -77,6 +80,9 @@ public class UsersService {
     @Transactional
     public void updateAddress(Integer id, Integer zipcode, String address){
         UsersEntity u = um.findAddress(id);
+        if(u == null){
+            u = new UsersEntity();
+        }
         um.updateAddress(u.getAddressid(), zipcode, address);
     }
 }

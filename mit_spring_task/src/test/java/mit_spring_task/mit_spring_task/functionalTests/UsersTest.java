@@ -60,7 +60,24 @@ public class UsersTest {
                 .andExpect(content().json(expected));
     }
 
-    @DatabaseSetup("/data/users/init-data/save") 
+    @DatabaseSetup("/data/users/init-data/find")
+    @Test
+    public void users_find_正常系_マッチデータ無し() throws Exception{
+        String expected = convertJsonDataToString("expected/users_find_none.json");
+        String data = "?name=三郎";
+        mockMvc.perform(get("/users" +data))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expected));
+    }
+
+    @Test
+    public  void users_find_異常系_リクエストパラム無し() throws Exception{
+        String data = "?name=";
+        mockMvc.perform(get("/users" +data))
+                .andExpect(status().isBadRequest());
+    }
+
+    @DatabaseSetup("/data/users/init-data/save")
     @ExpectedDatabase(
             value = "/data/users/after-data/save",
             assertionMode = DatabaseAssertionMode.NON_STRICT
@@ -74,6 +91,12 @@ public class UsersTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void users_save_異常系_ポストデータ無し() throws Exception{
+        mockMvc.perform(post("/users"))
+                .andExpect(status().isBadRequest());
+    }
+
     @DatabaseSetup("/data/users/init-data/find")
     @Test
     public void address_find_正常系() throws Exception{
@@ -82,6 +105,23 @@ public class UsersTest {
         mockMvc.perform(get("/address" + data))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected));
+    }
+
+    @DatabaseSetup("/data/users/init-data/find")
+    @Test
+    public void address_find_正常系_マッチデータ無し() throws Exception{
+        String expected = convertJsonDataToString("expected/address_find_none.json");
+        String data = "?id=99";
+        mockMvc.perform(get("/address" + data))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expected));
+    }
+
+    @Test
+    public void address_find_異常系_リクエストパラム無し() throws Exception{
+        String data = "?id=";
+        mockMvc.perform(get("/address" + data))
+                .andExpect(status().isBadRequest());
     }
 
     @DatabaseSetup("/data/users/init-data/update")
@@ -94,6 +134,20 @@ public class UsersTest {
         String data = "/11?zipcode=11111&address=ハワイ";
         mockMvc.perform(post("/address" + data))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void address_update_異常系_リクエストパラム無し() throws Exception{
+        String data = "/1?zipcode=&address=";
+        mockMvc.perform(post("/address" + data))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void address_update_異常系_リクエストid無し() throws Exception{
+        String data = "/?zipcode=11111&address=ハワイ";
+        mockMvc.perform(post("/address" + data))
+                .andExpect(status().isMethodNotAllowed());
     }
 
     private String convertJsonDataToString(String filePath)throws Exception{
