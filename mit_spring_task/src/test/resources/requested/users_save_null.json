@@ -1,0 +1,13 @@
+{
+  "users": {
+      "id": null,
+      "name": null,
+      "age": null,
+      "tel": null,
+      "addressInfo": {
+        "addressid": null,
+        "zipcode": null,
+        "address": null
+      }
+    }
+}

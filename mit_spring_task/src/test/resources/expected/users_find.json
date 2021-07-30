@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "name": "太郎",
+      "age": 22,
+      "tel": 33,
+      "addressInfo": {
+        "zipcode": 55555,
+        "address": "ハワイ"
+      }
+    }
+  ]
+}

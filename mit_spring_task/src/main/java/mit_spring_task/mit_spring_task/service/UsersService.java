@@ -2,7 +2,6 @@ package mit_spring_task.mit_spring_task.service;
 
 import mit_spring_task.mit_spring_task.dto.UsersAddressResponse.UsersAddressResponse;
 import mit_spring_task.mit_spring_task.dto.UsersAddressResponse.UsersAddressResponseFactory;
-import mit_spring_task.mit_spring_task.dto.UsersRequest.UsersRequestFactory;
 import mit_spring_task.mit_spring_task.dto.UsersRequest.UsersRequestWrapper;
 import mit_spring_task.mit_spring_task.dto.UsersResponse.UsersResponse;
 import mit_spring_task.mit_spring_task.dto.UsersResponse.UsersResponseFactory;
@@ -26,8 +25,6 @@ public class UsersService {
     @Autowired
     private UsersResponseWrapperFactory urpwf;
     @Autowired
-    private UsersRequestFactory urqf;
-    @Autowired
     private UsersEntityFactory uf;
     @Autowired
     private UsersAddressResponseFactory uarpf;
@@ -38,7 +35,8 @@ public class UsersService {
      * @return ユーザー検索結果のリスト
      */
     public UsersResponseWrapper findName(String name){
-        List<UsersResponse> urpList = urpf.urpfList(um.findName(name));
+        List<UsersEntity> uList = um.findName(name);
+        List<UsersResponse> urpList = urpf.toUrpList(uList);
         return  urpwf.toUrpw(urpList);
     }
 
@@ -48,8 +46,7 @@ public class UsersService {
      */
     @Transactional
     public void saveAddress(UsersRequestWrapper urqw){
-        UsersEntity u = uf.toUser(urqf.toUrq(urqw));
-        um.saveAddress(u);
+        um.saveAddress(uf.toUser(urqw));
     }
 
     /**
@@ -58,8 +55,7 @@ public class UsersService {
      */
     @Transactional
     public void saveUsers(UsersRequestWrapper urqw){
-        UsersEntity u = uf.toUser(urqf.toUrq(urqw));
-        um.saveUsers(u);
+        um.saveUsers(uf.toUser(urqw));
     }
 
     /**
@@ -69,6 +65,9 @@ public class UsersService {
      */
     public UsersAddressResponse findId(Integer id){
         UsersEntity u = um.findId(id);
+        if(u == null){
+            u = new UsersEntity();
+        }
         return uarpf.toUarp(u);
     }
 
@@ -81,7 +80,8 @@ public class UsersService {
     @Transactional
     public void updateAddress(Integer id, Integer zipcode, String address){
         UsersEntity u = um.findAddress(id);
-        Integer addressid = u.getAddressid();
-        um.updateAddress(addressid, zipcode, address);
+        if(u != null){
+            um.updateAddress(u.getAddressid(), zipcode, address);
+        }
     }
 }

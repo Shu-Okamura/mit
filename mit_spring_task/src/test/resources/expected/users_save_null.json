@@ -1,0 +1,33 @@
+{
+  "code": 500,
+  "fieldList": [
+    {
+      "name": "users.addressInfo.zipcode",
+      "message": "must not be null"
+    },
+    {
+      "name": "users.id",
+      "message": "must not be null"
+    },
+    {
+      "name": "users.addressInfo.address",
+      "message": "must not be blank"
+    },
+    {
+      "name": "users.name",
+      "message": "must not be blank"
+    },
+    {
+      "name": "users.age",
+      "message": "must not be null"
+    },
+    {
+      "name": "users.tel",
+      "message": "must not be null"
+    },
+    {
+      "name": "users.addressInfo.addressid",
+      "message": "must not be null"
+    }
+  ]
+}

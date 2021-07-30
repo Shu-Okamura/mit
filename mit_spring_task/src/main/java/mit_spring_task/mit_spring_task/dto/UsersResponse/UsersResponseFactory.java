@@ -13,8 +13,8 @@ public class UsersResponseFactory {
      * @param uList UsersEntityデータのリスト
      * @return 全ユーザー検索結果のリスト
      */
-    public List<UsersResponse> urpfList(List<UsersEntity> uList){
-        return uList.stream().map(this::urp).collect(Collectors.toList());
+    public List<UsersResponse> toUrpList(List<UsersEntity> uList){
+        return uList.stream().map(this::toUrp).collect(Collectors.toList());
     }
 
     /**
@@ -22,7 +22,7 @@ public class UsersResponseFactory {
      * @param u UsersEntityデータ
      * @return 個々のユーザー検索結果
      */
-    public UsersResponse urp(UsersEntity u){
+    public UsersResponse toUrp(UsersEntity u){
         UsersChildResponse ucrp = new UsersChildResponse(u.getZipcode(),u.getAddress());
         return new UsersResponse(u.getName(),u.getAge(),u.getTel(),ucrp);
     }
