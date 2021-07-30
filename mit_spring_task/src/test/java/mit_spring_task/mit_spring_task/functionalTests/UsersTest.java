@@ -77,7 +77,6 @@ public class UsersTest {
         mockMvc.perform(get("/users" +data))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().json(expected));
-//        String a = requestResult.getResponse().getContentAsString();
     }
 
     @DatabaseSetup("/data/users/init-data/save")
