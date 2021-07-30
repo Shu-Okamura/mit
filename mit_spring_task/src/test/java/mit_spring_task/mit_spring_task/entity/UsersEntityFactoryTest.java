@@ -21,16 +21,15 @@ public class UsersEntityFactoryTest {
 
     @Test
     public void toUser_正常系(){
-        Integer id=1; String name="name"; Integer age=2; Integer tel=3; Integer addressid=4; Integer zipcode=5; String address="address";
-        UsersRequestWrapper urqw = new UsersRequestWrapper(new UsersRequest(id,name,age,tel,new UsersChildRequest(addressid,zipcode,address)));
+        UsersRequestWrapper urqw = new UsersRequestWrapper(new UsersRequest(1,"name",2,3,new UsersChildRequest(4,5,"address")));
         UsersEntity actual = uf.toUser(urqw);
 
-        assertEquals(id, actual.getId());
-        assertEquals(name, actual.getName());
-        assertEquals(age, actual.getAge());
-        assertEquals(tel, actual.getTel());
-        assertEquals(addressid, actual.getAddressid());
-        assertEquals(zipcode, actual.getZipcode());
-        assertEquals(address, actual.getAddress());
+        assertEquals(1, actual.getId());
+        assertEquals("name", actual.getName());
+        assertEquals(2, actual.getAge());
+        assertEquals(3, actual.getTel());
+        assertEquals(4, actual.getAddressid());
+        assertEquals(5, actual.getZipcode());
+        assertEquals("address", actual.getAddress());
     }
 }

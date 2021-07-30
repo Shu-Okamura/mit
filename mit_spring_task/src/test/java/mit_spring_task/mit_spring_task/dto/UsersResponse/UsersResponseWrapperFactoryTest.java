@@ -21,12 +21,11 @@ public class UsersResponseWrapperFactoryTest {
 
     @Test
     public void toUrpw_正常系(){
-        String name = "name"; Integer age = 1; Integer tel = 2; Integer zipcode = 3; String address = "address";
-        UsersResponseWrapper actual = urpwf.toUrpw(List.of(new UsersResponse(name,age,tel,new UsersChildResponse(zipcode,address))));
-        assertEquals(name, actual.getUsers().get(0).getName());
-        assertEquals(age, actual.getUsers().get(0).getAge());
-        assertEquals(tel, actual.getUsers().get(0).getTel());
-        assertEquals(zipcode, actual.getUsers().get(0).getAddressInfo().getZipcode());
-        assertEquals(address, actual.getUsers().get(0).getAddressInfo().getAddress());
+        UsersResponseWrapper actual = urpwf.toUrpw(List.of(new UsersResponse("name",1,2,new UsersChildResponse(3,"address"))));
+        assertEquals("name", actual.getUsers().get(0).getName());
+        assertEquals(1, actual.getUsers().get(0).getAge());
+        assertEquals(2, actual.getUsers().get(0).getTel());
+        assertEquals(3, actual.getUsers().get(0).getAddressInfo().getZipcode());
+        assertEquals("address", actual.getUsers().get(0).getAddressInfo().getAddress());
     }
 }

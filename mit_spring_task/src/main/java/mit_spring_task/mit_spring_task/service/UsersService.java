@@ -80,9 +80,8 @@ public class UsersService {
     @Transactional
     public void updateAddress(Integer id, Integer zipcode, String address){
         UsersEntity u = um.findAddress(id);
-        if(u == null){
-            u = new UsersEntity();
+        if(u != null){
+            um.updateAddress(u.getAddressid(), zipcode, address);
         }
-        um.updateAddress(u.getAddressid(), zipcode, address);
     }
 }

@@ -73,8 +73,11 @@ public class UsersTest {
     @Test
     public  void users_find_異常系_リクエストパラム無し() throws Exception{
         String data = "?name=";
+        String expected = convertJsonDataToString("expected/users_find_failure.json");
         mockMvc.perform(get("/users" +data))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(expected));
+//        String a = requestResult.getResponse().getContentAsString();
     }
 
     @DatabaseSetup("/data/users/init-data/save")
@@ -95,6 +98,15 @@ public class UsersTest {
     public void users_save_異常系_ポストデータ無し() throws Exception{
         mockMvc.perform(post("/users"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void users_save_異常系_ポストデータnull() throws Exception{
+        String request = convertJsonDataToString("requested/users_save_null.json");
+        String expected = convertJsonDataToString("expected/users_save_null.json");
+        mockMvc.perform(post("/users").content(request).contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(expected));
     }
 
     @DatabaseSetup("/data/users/init-data/find")
@@ -120,8 +132,10 @@ public class UsersTest {
     @Test
     public void address_find_異常系_リクエストパラム無し() throws Exception{
         String data = "?id=";
+        String expected = convertJsonDataToString("expected/address_find_failure.json");
         mockMvc.perform(get("/address" + data))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(expected));
     }
 
     @DatabaseSetup("/data/users/init-data/update")
@@ -136,11 +150,14 @@ public class UsersTest {
                 .andExpect(status().isOk());
     }
 
+
     @Test
     public void address_update_異常系_リクエストパラム無し() throws Exception{
         String data = "/1?zipcode=&address=";
+        String expected = convertJsonDataToString("expected/address_update_failure.json");
         mockMvc.perform(post("/address" + data))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(expected));
     }
 
     @Test

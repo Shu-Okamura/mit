@@ -33,20 +33,20 @@ public class UsersController {
      * @param urqw ユーザー情報
      */
     @PostMapping("/users")
-    void users(@RequestBody UsersRequestWrapper urqw){
+    void users(@Valid @RequestBody UsersRequestWrapper urqw){
         us.saveAddress(urqw);
         us.saveUsers(urqw);
     }
 
     @GetMapping("/address")
-    UsersAddressResponse address(@Valid @NotNull @RequestParam("id") Integer id){
+    UsersAddressResponse address(@Valid @NotNull @RequestParam(name="id",required = false) Integer id){
         return us.findId(id);
     }
 
     @PostMapping("/address/{id}")
     void address(@Valid @NotNull @PathVariable("id") Integer id,
-                 @Valid @NotNull @RequestParam("zipcode")Integer zipcode,
-                 @Valid @NotBlank @RequestParam("address")String address){
+                 @Valid @NotNull @RequestParam(name="zipcode", required = false)Integer zipcode,
+                 @Valid @NotBlank @RequestParam(name="address", required = false)String address){
         us.updateAddress(id,zipcode,address);
     }
 

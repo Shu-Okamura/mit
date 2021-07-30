@@ -22,14 +22,13 @@ public class UsersResponseFactoryTest {
 
     @Test
     public void toUrpList_正常系(){
-        String name = "name"; Integer age = 1; Integer tel = 2; Integer zipcode = 3; String address = "address";
-        List<UsersEntity> uList = List.of(new UsersEntity(1,name,age,tel,11,null,null,zipcode,address));
+        List<UsersEntity> uList = List.of(new UsersEntity(1,"name",2,3,4,null,null,5,"address"));
         List<UsersResponse> actual = urpf.toUrpList(uList);
 
-        assertEquals(name, actual.get(0).getName());
-        assertEquals(age, actual.get(0).getAge());
-        assertEquals(tel, actual.get(0).getTel());
-        assertEquals(zipcode, actual.get(0).getAddressInfo().getZipcode());
-        assertEquals(address, actual.get(0).getAddressInfo().getAddress());
+        assertEquals("name", actual.get(0).getName());
+        assertEquals(2, actual.get(0).getAge());
+        assertEquals(3, actual.get(0).getTel());
+        assertEquals(5, actual.get(0).getAddressInfo().getZipcode());
+        assertEquals("address", actual.get(0).getAddressInfo().getAddress());
     }
 }

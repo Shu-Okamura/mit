@@ -88,13 +88,40 @@ public class UsersServiceTest {
     }
 
     @Test
+    public void findId_正常系_マッチデータ無し(){
+        Integer id = 10;
+        UsersAddressResponse expect = new UsersAddressResponse();
+        UsersEntity u = new UsersEntity();
+        when(um.findId(id)).thenReturn(null);
+        when(uarpf.toUarp(any(UsersEntity.class))).thenReturn(expect);
+        UsersAddressResponse actual = us.findId(id);
+        verify(um,times(1)).findId(id);
+        verify(uarpf,times(1)).toUarp(any(UsersEntity.class));
+        assertEquals(expect,actual);
+    }
+
+    @Test
     public void updateAddress_正常系(){
-        Integer id = 1; Integer zipcode = 5; String address = "new address";
+        Integer id = 1;
+        Integer zipcode = 5;
+        String address = "new address";
         UsersEntity u = new UsersEntity();
         when(um.findAddress(id)).thenReturn(u);
         doNothing().when(um).updateAddress(u.getAddressid(),zipcode,address);
         us.updateAddress(id, zipcode, address);
         verify(um,times(1)).findAddress(id);
         verify(um,times(1)).updateAddress(u.getAddressid(), zipcode, address);
+    }
+
+    @Test
+    public void updateAddress_正常系_マッチデータ無し(){
+        Integer id = 10;
+        Integer zipcode = 5;
+        String address = "address";
+        UsersEntity u = new UsersEntity();
+        when(um.findAddress(id)).thenReturn(null);
+        us.updateAddress(id, zipcode, address);
+        verify(um,times(1)).findAddress(id);
+        verify(um,times(0)).updateAddress(anyInt(), anyInt(),anyString());
     }
 }

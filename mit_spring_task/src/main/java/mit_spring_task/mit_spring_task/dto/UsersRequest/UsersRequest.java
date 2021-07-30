@@ -20,5 +20,6 @@ public class UsersRequest {
     private Integer age;
     @Valid @NotNull
     private Integer tel;
+    @Valid
     private UsersChildRequest addressInfo;
 }
