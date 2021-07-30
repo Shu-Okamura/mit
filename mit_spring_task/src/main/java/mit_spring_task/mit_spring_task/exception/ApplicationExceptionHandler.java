@@ -23,20 +23,14 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return handleExceptionInternal(ex, "MethodArgumentNotValid",headers, status, request);
+        ErrorResource errorResource = ErrorResource.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getBindingResult().getFieldErrors());
+        return handleExceptionInternal(ex, errorResource,headers, status, request);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleValidation(ConstraintViolationException ex, WebRequest request){
         ErrorResource errorResource = ErrorResource.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getConstraintViolations());
         return handleExceptionInternal(ex,errorResource,null,HttpStatus.BAD_REQUEST,request);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleValidationPost(MethodArgumentNotValidException ex, WebRequest request){
-//        ErrorResource errorResource = ErrorResource.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getConstraintViolations());
-        return handleExceptionInternal(ex,"",null,HttpStatus.BAD_REQUEST,request);
-//        return null;
     }
 
 }
